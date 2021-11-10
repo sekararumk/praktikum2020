@@ -1,0 +1,56 @@
+---
+title: "Latihan6_123190135"
+author: "123190135_SekarArumK"
+date: "11/5/2021"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Modul 7
+
+1. Gunakan as_tibble untuk mengkonversi tabel dataset “US murders” dalam bentuk tibble dan simpan dalam objek baru bernama ‘murders_tibble’. 
+
+```{r}
+library(tidyverse)
+library(dslabs)
+data(murders)
+
+murders_tibble <- as_tibble(murders)
+murders_tibble
+```
+
+2. Gunakan fungsi group_by untuk mengkonversi dataset “US murders” menjadi sebuah tibble yang dikelompokkan berdasarkan ‘region’. 
+
+```{r}
+murders_tibble %>% group_by(region)
+head(murders_tibble)
+```
+
+
+3. Tulis script tidyverse yang menghasilkan output yang sama dengan perintah berikut: 
+```
+exp(mean(log(murders$population)))
+```
+Gunakan operator pipe sehingga setiap fungsi dapat dipanggil tanpa menambahkan argumen. Gunakan dot operator untuk mengakses populasi.
+
+```{r}
+murders %>% .$population %>% log() %>% mean() %>% exp()
+```
+
+4. Gunakan map_df untuk membuat data frame yang terdiri dari tiga kolom: ‘n’, ‘s_n’, dan ‘s_n_2’. Kolom pertama harus berisi angka 1 hingga 100. Kolom kedua dan ketiga masing-masing harus berisi penjumlahan 1 hingga n, dimana n menyatakan jumlah baris. 
+
+```{r}
+compute_s_n <- function(n){
+  s_n <- sum(1:n)
+  data_frame(n = n, s_n = s_n, s_n_2 = s_n)
+}
+n <- 1:100
+
+map_df(n, compute_s_n)
+```
+
